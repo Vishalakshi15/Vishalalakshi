@@ -1,0 +1,53 @@
+#include <iostream>
+
+// Slow Division Algorithm
+void slowDivision(int dividend, int divisor, int& quotient, int& remainder) {
+    quotient = 0;
+    remainder = dividend;
+    while (remainder >= divisor) {
+        remainder -= divisor;
+        quotient++;
+    }
+}
+
+// Fast Division Algorithm
+void fastDivision(int dividend, int divisor, int& quotient, int& remainder) {
+    quotient = 0;
+    remainder = dividend;
+    int bitPosition = 1;
+
+    while (divisor <= remainder) {
+        divisor <<= 1;
+        bitPosition <<= 1;
+    }
+
+    while (bitPosition > 1) {
+        divisor >>= 1;
+        bitPosition >>= 1;
+
+        if (remainder >= divisor) {
+            remainder -= divisor;
+            quotient += bitPosition;
+        }
+    }
+}
+
+int main() {
+    int dividend = 10;
+    int divisor = 3;
+    int quotient, remainder;
+
+    // Slow Division
+    slowDivision(dividend, divisor, quotient, remainder);
+    std::cout << "Slow Division:\n";
+    std::cout << "Quotient: " << quotient << "\n";
+    std::cout << "Remainder: " << remainder << "\n";
+
+    // Fast Division
+    fastDivision(dividend, divisor, quotient, remainder);
+    std::cout << "Fast Division:\n";
+    std::cout << "Quotient: " << quotient << "\n";
+    std::cout << "Remainder: " << remainder << "\n";
+
+    return 0;
+}
